@@ -34,6 +34,7 @@ Adafruit_DRV8830::Adafruit_DRV8830() {}
 /**************************************************************************/
 /*!
     @brief  Sets up the I2C connection and tests that the sensor was found.
+    @param addr The 7-bit I2C address of the DRV8830
     @param theWire Pointer to an I2C device we'll use to communicate
     default is Wire
     @return true if sensor was found, otherwise false.
@@ -58,14 +59,33 @@ bool Adafruit_DRV8830::begin(uint8_t addr, TwoWire *theWire) {
 }
 
 
+
+/**************************************************************************/
+/*!
+    @brief Set the PWM output
+    @param throttle 0-255 value which will be mapped as best as possible
+    to the DRV8830 PWM/DAC system
+    @return False if unable to communicate with DRV
+*/
+/**************************************************************************/
 bool Adafruit_DRV8830::setSpeed(uint8_t throttle) {
-  throttle = map(throttle, 0, 255, 0x06, 0x3F);
+  throttle = map(throttle, 0, 255, 0x0, 0x3F);
+  throttle = max(6, throttle);
+
+  Serial.println(throttle, HEX);
   Adafruit_I2CRegisterBits dac =
       Adafruit_I2CRegisterBits(ctrl_reg, 6, 2); // # bits, bit_shift
   return dac.write(throttle);
 }
 
-
+/**************************************************************************/
+/*!
+    @brief Set the motor spin direction / H-bridge configuration
+    @param direction Action you want for the motor. Can be FORWARD, BACKWARD,
+    BRAKE or RELEASE
+    @return False if unable to communicate with DRV
+*/
+/**************************************************************************/
 bool Adafruit_DRV8830::run(DRV8830_Direction direction) {
   Adafruit_I2CRegisterBits dirbits =
       Adafruit_I2CRegisterBits(ctrl_reg, 2, 0); // # bits, bit_shift
