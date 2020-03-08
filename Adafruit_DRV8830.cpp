@@ -70,9 +70,9 @@ bool Adafruit_DRV8830::begin(uint8_t addr, TwoWire *theWire) {
 /**************************************************************************/
 bool Adafruit_DRV8830::setSpeed(uint8_t throttle) {
   throttle = map(throttle, 0, 255, 0x0, 0x3F);
-  throttle = max(6, throttle);
+  if (throttle < 6) throttle = 6;
 
-  Serial.println(throttle, HEX);
+  //Serial.println(throttle, HEX);
   Adafruit_I2CRegisterBits dac =
       Adafruit_I2CRegisterBits(ctrl_reg, 6, 2); // # bits, bit_shift
   return dac.write(throttle);
@@ -91,3 +91,22 @@ bool Adafruit_DRV8830::run(DRV8830_Direction direction) {
       Adafruit_I2CRegisterBits(ctrl_reg, 2, 0); // # bits, bit_shift
   return dirbits.write((uint8_t) direction);
 }
+
+
+/**************************************************************************/
+/*!
+
+*/
+/**************************************************************************/
+uint8_t Adafruit_DRV8830::getFaults(void) {
+  uint8_t fault = fault_reg->read();
+  fault &= 0x1F;
+  return fault;
+}
+
+bool Adafruit_DRV8830::clearFaults(void) {
+  Adafruit_I2CRegisterBits clear =
+      Adafruit_I2CRegisterBits(fault_reg, 1, 7); // # bits, bit_shift
+  return clear.write(1);
+}
+
