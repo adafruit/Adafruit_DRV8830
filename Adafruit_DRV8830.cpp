@@ -93,7 +93,7 @@ bool Adafruit_DRV8830::run(DRV8830_Direction direction) {
 
 /**************************************************************************/
 /*!
-
+    @brief Get fault code
 */
 /**************************************************************************/
 uint8_t Adafruit_DRV8830::getFaults(void) {
@@ -101,6 +101,12 @@ uint8_t Adafruit_DRV8830::getFaults(void) {
   fault &= 0x1F;
   return fault;
 }
+
+/**************************************************************************/
+/*!
+    @brief Clear fault code
+*/
+/**************************************************************************/
 
 bool Adafruit_DRV8830::clearFaults(void) {
   Adafruit_I2CRegisterBits clear =
