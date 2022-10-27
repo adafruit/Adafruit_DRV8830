@@ -94,6 +94,7 @@ bool Adafruit_DRV8830::run(DRV8830_Direction direction) {
 /**************************************************************************/
 /*!
     @brief Get fault code
+    @return Fault register
 */
 /**************************************************************************/
 uint8_t Adafruit_DRV8830::getFaults(void) {
@@ -105,6 +106,7 @@ uint8_t Adafruit_DRV8830::getFaults(void) {
 /**************************************************************************/
 /*!
     @brief Clear fault code
+    @return true on success
 */
 /**************************************************************************/
 
