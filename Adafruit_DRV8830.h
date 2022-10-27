@@ -21,14 +21,13 @@
 
 /** Default DRV8830 I2C address. */
 #define DRV8830_I2CADDR_DEFAULT 0x60 ///< I2C address
-#define DRV8830_CONTROL  0x00     ///< Control register
-#define DRV8830_FAULT  0x01     ///< Fault condition register
+#define DRV8830_CONTROL 0x00         ///< Control register
+#define DRV8830_FAULT 0x01           ///< Fault condition register
 
 #define DRV8830_FAULT_ILIMIT 0x10
 #define DRV8830_FAULT_OVERTEMP 0x08
 #define DRV8830_FAULT_UVLOW 0x04
 #define DRV8830_FAULT_OVERCURR 0x02
-
 
 typedef enum _drv8830_dir_t {
   RELEASE = 0,
@@ -36,7 +35,6 @@ typedef enum _drv8830_dir_t {
   FORWARD = 2,
   BRAKE = 3,
 } DRV8830_Direction;
-
 
 /**************************************************************************/
 /*!
